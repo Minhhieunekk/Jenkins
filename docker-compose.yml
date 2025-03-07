@@ -45,12 +45,26 @@ services:
     networks:
       - ci_network
 
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus
+    ports:
+      - "8081:8081" # Giao diện Web Nexus
+      - "8082:8082" # Docker registry (nếu cần)
+    volumes:
+      - nexus_data:/nexus-data
+    environment:
+      - INSTALL4J_ADD_VM_PARAMS=-Xms512m -Xmx1024m -XX:MaxDirectMemorySize=1024m
+    networks:
+      - ci_network
+
 volumes:
   jenkins_home:
   sonarqube_data:
   sonarqube_extensions:
   sonarqube_logs:
   sonar_db_data:
+  nexus_data:
 
 networks:
   ci_network:

@@ -33,5 +33,22 @@ pipeline {
                 }
             }
         }
+        stage('Upload to Nexus') {
+			steps {
+				nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: 'http://nexus:8081',
+                    repository: 'maven-releases',
+                    credentialsId: 'nexus-cred',
+                    groupId: 'com.example',
+                    artifactId: 'Jenkins_Sonarqube',
+                    version: '0.0.1-SNAPSHOT',
+                    packaging: 'jar',
+                    file: 'target/Jenkins_Sonarqube-0.0.1-SNAPSHOT.jar'
+                )
+            }
+        }
+
     }
 }
